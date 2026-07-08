@@ -102,6 +102,6 @@ The phishing score is based on simple heuristic checks and should not be conside
 
 ## 👨‍💻 Author
 
-Developed by **Fanu**
+Developed by **THEVIGILANTE**
 
 If you find this project useful, feel free to ⭐ the repository and follow its progress.
