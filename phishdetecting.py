@@ -3,6 +3,8 @@ import argparse
 import time
 from colorama import Fore, Style, init
 from urllib.parse import urlparse
+import ipaddress
+
 init(autoreset=True)
 keywords=[
     "login",
@@ -16,17 +18,16 @@ keywords=[
     "signin",
     "confirm"
 ]
+print("""██████╗ ██╗  ██╗██╗███████╗██╗  ██╗ 
+         ██╔══██╗██║  ██║██║██╔════╝██║  ██║
+         ██████╔╝███████║██║███████╗███████║
+         ██╔═══╝ ██╔══██║██║╚════██║██╔══██║
+         ██║     ██║  ██║██║███████║██║  ██║
+         ╚═╝     ╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═╝
 
-
-a = argparse.ArgumentParser(description="""
-===========================================
-   PHISHING DETECTOR v1.0
-===========================================
-
-
-"Trust nothing. Verify everything."
-===========================================
-""",formatter_class=argparse.RawTextHelpFormatter)
+       PHISHING DETECTOR v2.0
+      Trust Nothing. Verify Everything.""")
+a = argparse.ArgumentParser()
 a.add_argument("-u","--url",required=True,help="website link")
 a.add_argument("-v","--verbose",action = "store_true",help="show the process")
 args = a.parse_args()
@@ -45,12 +46,15 @@ if "@" in url:
     score = score - 10
 if "-" in url:
     score = score - 10
+
 for keyword in keywords:
     if keyword in url.lower():
         score = score - 10
+if url.count(".") > 3:
+    score -= 10
 if args.verbose:
 
-   print(Fore.BLUE +"-----------------------")
+   print(Fore.BLUE +"---DE4TAILED REPORT.---")
    time.sleep(1)
    print(Fore.CYAN +"URL:", url)
    time.sleep(1)
@@ -58,10 +62,32 @@ if args.verbose:
    print(Fore.LIGHTGREEN_EX + f"Protocol : {p.scheme}")
    print(Fore.LIGHTGREEN_EX + f"Hostname : {p.hostname}")
    print(Fore.LIGHTGREEN_EX + f"Path     : {p.path}")
+   if keyword in url.lower():
+       print(Fore.WHITE +"KEYWORD DETECTED: " +keyword)
+   if len(url) > 70:
+       print("[!] URL Length : ",len(url),"characters (Long)")
+   else:
+       print("[!] URL Length : ",len(url), "characters (Safe)")
+   try:
+       ip = ipaddress.ip_address(p.hostname)
+       print(Fore.YELLOW + "[!] Hostname is an IP Address:", ip)
+       score = score - 10
+
+   except ValueError:
+       print(Fore.GREEN + "[+] Hostname is a Domain Name")
+       score = score + 10
    print(Fore.LIGHTBLUE_EX +"Score:", score)
 
+
 else:
-    time.sleep(3)
+    print("""[*] Initializing...
+[*] Connecting modules...
+[*] Starting analysis...
+[*] Please wait...
+
+[✓] Scan Started Successfully""")
+    time.sleep(2)
+
 if score >= 10:
     print(Fore.GREEN + "[+] Status: Looks Safe")
 elif score >= 0:
