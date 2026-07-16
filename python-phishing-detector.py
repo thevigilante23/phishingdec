@@ -55,8 +55,20 @@ if "-" in url:
 for keyword in keywords:
     if keyword in url.lower():
         score = score - 10
+try:
+    ip = ipaddress.ip_address(p.hostname)
+    print(Fore.YELLOW + "[!] Hostname is an IP Address:", ip)
+    score = score - 10
+
+except ValueError:
+    print(Fore.GREEN + "[+] Hostname is a Domain Name")
+    score = score + 10
+print(Fore.LIGHTBLUE_EX +"Score:", score)
+
+
 if url.count(".") > 3:
     score -= 10
+
 if args.verbose:
 
    print(Fore.BLUE +"---DE4TAILED REPORT.---")
@@ -73,15 +85,7 @@ if args.verbose:
        print("[!] URL Length : ",len(url),"characters (Long)")
    else:
        print("[!] URL Length : ",len(url), "characters (Safe)")
-   try:
-       ip = ipaddress.ip_address(p.hostname)
-       print(Fore.YELLOW + "[!] Hostname is an IP Address:", ip)
-       score = score - 10
 
-   except ValueError:
-       print(Fore.GREEN + "[+] Hostname is a Domain Name")
-       score = score + 10
-   print(Fore.LIGHTBLUE_EX +"Score:", score)
 
 
 else:
