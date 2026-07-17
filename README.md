@@ -54,13 +54,13 @@ pip install colorama
 Basic scan:
 
 ```bash
-python phishingsec.py -u https://google.com
+python phishing-dec.py -u https://google.com
 ```
 
 Verbose scan:
 
 ```bash
-python phishingsec.py -u http://192.168.1.100/login/verify/account/update/password -v
+python phishing-dec.py -u http://192.168.1.100/login/verify/account/update/password -v
 ```
 
 ## 🧠 Detection Logic
